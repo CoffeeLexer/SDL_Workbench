@@ -52,7 +52,7 @@ int main(int argc, const char* argv[])
 	shape.Add(0, 0);
 	shape.Add(5, 5);
 
-
+	Vector v3 = Vector();
 	
 	shape.SetPivot(50, 50);
 	while(windowOpen)
