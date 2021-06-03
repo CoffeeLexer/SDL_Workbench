@@ -5,12 +5,15 @@
 #include <unistd.h>
 #include <time.h>
 #include <list>
-#include "Box.h"
-#include "Vector.h"
-#include "Shape.h"
+#include <math.h>
+#include "Vector3.h"
+#include "Shape3.h"
 
 int main(int argc, const char* argv[])
 {
+	Vector3 v;
+	v['x'] = 4;
+
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
@@ -34,27 +37,31 @@ int main(int argc, const char* argv[])
 
 	SDL_Texture *texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_TARGET, 200, 200);
 	Uint32 t = SDL_GetTicks();
-	Shape shape = Shape();
-	shape.Add(0, 0);
-	shape.Add(0, 100);
-	shape.Add(5, 95);
-	shape.Add(95, 95);
-	shape.Add(100, 100);
-	shape.Add(100, 0);
-	shape.Add(95, 5);
-	shape.Add(5, 5);
-	shape.Add(5, 95);
-	shape.Add(0, 100);
-	shape.Add(100, 100);
-	shape.Add(95, 95);
-	shape.Add(95, 5);
-	shape.Add(100, 0);
-	shape.Add(0, 0);
-	shape.Add(5, 5);
 
-	Vector v3 = Vector();
+	Shape3 box = Shape3();
+	box.Add(Vector3(0,0,0));
+	box.Add(Vector3(100,0,0));
+	box.Add(Vector3(100,100,0));
+	box.Add(Vector3(0,100,0));
+	box.Add(Vector3(0,0,0));
+	box.Add(Vector3(0,0,100));
+	box.Add(Vector3(0,100,100));
+	box.Add(Vector3(0,100,0));
+	box.Add(Vector3(0,100,100));
+	box.Add(Vector3(100,100,100));
+	box.Add(Vector3(100,100,0));
+	box.Add(Vector3(100,100,100));
+	box.Add(Vector3(100,0,100));
+	box.Add(Vector3(100,0,0));
+	box.Add(Vector3(100,0,100));
+	box.Add(Vector3(0,0,100));
+
+
+	box.position += Vector3(200, 200, 0);
+
 	
-	shape.SetPivot(50, 50);
+	//shape.SetPivot(50, 50);
+	box.RotateZ(15);
 	while(windowOpen)
 	{
 		while(SDL_PollEvent(&event) > 0)
@@ -83,8 +90,8 @@ int main(int argc, const char* argv[])
 			SDL_RenderClear(renderer);
 
 			SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, SDL_ALPHA_OPAQUE);
-			shape.Rotate(1);
-			shape.Draw(renderer, Point(100, 100));
+			box.RotateY(1);
+			box.Draw(renderer);
 			SDL_RenderPresent(renderer);
 		}
 		else
