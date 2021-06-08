@@ -115,6 +115,10 @@ class Vector3
             _y -= other._y;
             _z -= other._z;
         }
+        Vector3 operator -(const Vector3 other)
+        {
+            return Vector3(_x - other._x, _y - other._y, _z - other._z);
+        }
     private:
         float _x;
         float _y;

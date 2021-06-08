@@ -8,7 +8,8 @@ class Shape3
     public:
         Shape3()
         {
-            position = Vector3().zero();
+            position = Vector3::zero();
+            pivot = Vector3::zero();
         }
         void Add(Vector3 v)
         {
@@ -91,8 +92,22 @@ class Shape3
                 points.push_back(p);
             }
         }
+        void SetPivot(Vector3 v)
+        {
+                Vector3 dif = pivot - v;
+                int c = points.size();
+                for(int i = 0; i < c; i++)
+                {
+                    Vector3 p = points.front();
+                    points.pop_front();
+                    p += dif;
+                    points.push_back(p);
+                }
+                pivot = v;
+        }
         Vector3 position;
     private:
+        Vector3 pivot;
         std::list<Vector3> points;
 };
 #endif
